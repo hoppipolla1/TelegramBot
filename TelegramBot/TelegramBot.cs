@@ -7,7 +7,7 @@ using Telegram.Bot.Types;
 
 namespace TelegramBot
 {
-    internal class TelegramBot
+    static class TelegramBot
     {
         static string token = "5518542254:AAGeFx8chaqa899geHrnEO7Q1i2TFrRkR4o";
         static ITelegramBotClient bot = new TelegramBotClient(token);
@@ -32,20 +32,20 @@ namespace TelegramBot
 
                         if (Response != "")
                         {
-                            await botClient.SendTextMessageAsync(message.Chat, Response);
+                            await botClient.SendTextMessageAsync(message.Chat, Response, cancellationToken: cancellationToken);
 
                             string additionallyMethod = messageController.AdditionallyFunc(messageText, update, botClient);
 
                             if (additionallyMethod != "")
                             {
-                                await botClient.SendPhotoAsync(message.Chat, additionallyMethod);
+                                await botClient.SendPhotoAsync(message.Chat, additionallyMethod, cancellationToken: cancellationToken);
                             }
 
                             return;
                         }
                         else
                         { 
-                            string additionallyMethod = messageController.AdditionallyFunc(messageText, update, botClient);
+                            messageController.AdditionallyFunc(messageText, update, botClient);
                             return;
                         }
                     }

@@ -1,0 +1,2 @@
+﻿C:\Users\Kulinich.Nikita\source\repos\TelegramBot\TelegramBot\MessageController.cs
+C:\Users\Kulinich.Nikita\source\repos\TelegramBot\TelegramBot\TelegramBot.cs

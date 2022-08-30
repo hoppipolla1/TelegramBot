@@ -15,29 +15,25 @@ namespace TelegramBot
             string value;
             Messages.TryGetValue(text, out value);
 
-            if (value == null)
+            if (value == null && text.Contains("woof"))
             {
-                if (text.Contains("woof"))
+                string translateMessage;
+                WebRequest request = WebRequest.Create("https://api.funtranslations.com/translate/doge.json" + "?text=$" + text);
+
+                WebResponse response = request.GetResponse();
+
+                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
                 {
-                    string translateMessage;
-                    WebRequest request = WebRequest.Create("https://api.funtranslations.com/translate/doge.json" + "?text=$" + text);
-
-                    WebResponse response = request.GetResponse();
-
-                    using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-                    {
-                        translateMessage = sr.ReadToEnd();
-                    }
-
-                    var json = JObject.Parse(translateMessage);
-
-                    string s = json["contents"].First.ToString();
-                    int startIndex = s.IndexOf("$") + 1;
-                    int endIndex = s.Length - 2;
-
-                    value = s.Substring(startIndex, endIndex - startIndex);
-
+                    translateMessage = sr.ReadToEnd();
                 }
+
+                var json = JObject.Parse(translateMessage);
+
+                string s = json["contents"].First.ToString();
+                int startIndex = s.IndexOf("$") + 1;
+                int endIndex = s.Length - 2;
+
+                value = s.Substring(startIndex, endIndex - startIndex);
             }
 
             return value ?? "";
@@ -62,7 +58,7 @@ namespace TelegramBot
                 return "";
         }
 
-        private async static void MessageTrigger(Update update, ITelegramBotClient botClient)
+        private static async Task MessageTrigger(Update update, ITelegramBotClient botClient)
         {
             var message = update.Message;
             if (message == null || message.Type != MessageType.Text) return;
