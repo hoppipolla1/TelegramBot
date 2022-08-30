@@ -10,7 +10,7 @@ namespace TelegramBot
 {
     class MessageController
     {
-        public string TakeApartMessage(string text)
+        public string TakeApartMessage(Dictionary<string, string> Messages, string text)
         {
             string value;
             Messages.TryGetValue(text, out value);

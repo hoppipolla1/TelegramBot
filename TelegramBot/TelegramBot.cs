@@ -28,7 +28,7 @@ namespace TelegramBot
                     if (message.Text != null)
                     {
                         string messageText = message.Text.ToString();
-                        string Response = messageController.TakeApartMessage(messageText) ?? "";
+                        string Response = messageController.TakeApartMessage(Messages, messageText) ?? "";
 
                         if (Response != "")
                         {
@@ -66,9 +66,6 @@ namespace TelegramBot
 
         static void Main(string[] args)
         {
-
-            #region StartUp
-
             Console.WriteLine("Запущен бот " + bot.GetMeAsync().Result.FirstName);
             var cts = new CancellationTokenSource();
             var cancellationToken = cts.Token;
@@ -84,11 +81,9 @@ namespace TelegramBot
                 cancellationToken
             );
 
-            Console.ReadLine();
-
-            #endregion
-
             messageController.CreateDictionary(Messages);
+
+            Console.ReadLine();
 
         }
     }
