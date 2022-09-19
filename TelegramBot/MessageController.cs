@@ -71,7 +71,7 @@ namespace TelegramBot
                 {
                     Console.WriteLine("Добавлено напоминание для " + message.From + " через " + time.ToString() + " часов.");
                     await botClient.SendTextMessageAsync(message.Chat.Id, $"Добавлено напоминание, которое оповестит вас через {time} часов.") ;
-                    await Task.Delay(time * 1000);
+                    await Task.Delay(time * 1000 * 60);
                     await botClient.SendTextMessageAsync(message.Chat.Id, "Время кормить собаку woof!");
                     Console.WriteLine("Напоминание для " + message.From + " выполнено.");
                 }
